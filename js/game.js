@@ -4,8 +4,8 @@ Aftermath.Game = function(){};
 
 Aftermath.Game.prototype = {
 	create: function() {
-		this.game.world.setBounds(0,0, 8000, 8000);
-		this.background = this.game.add.tileSprite(0, 0, 8000, 8000, 'sand');
+		this.game.world.setBounds(0,0, 24000, 24000);
+		this.background = this.game.add.tileSprite(0, 0, 24000, 24000, 'sand');
 
 		this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
 		this.player.anchor.setTo(0.5, 0.5);
@@ -28,7 +28,7 @@ Aftermath.Game.prototype = {
 
 		goons = this.game.add.group();
 		goons.enableBody = true;
-		
+
 
 		for (var i=0; i <= 20; i++) {
 			var gasBarrel = gas.create(this.game.world.randomX, this.game.world.randomY, 'gas');
