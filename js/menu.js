@@ -1,3 +1,4 @@
+var Aftermath = Aftermath || {};
 Aftermath.Menu = function(){};
 
 Aftermath.Menu.prototype = {
