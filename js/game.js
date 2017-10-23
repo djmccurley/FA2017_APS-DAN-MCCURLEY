@@ -13,7 +13,7 @@ Aftermath.Game.prototype = {
 		this.game.physics.arcade.enable(this.player);
 		this.player.body.collideWorldBounds = true;
 		this.player.body.drag.set(300);
-		this.game.camera.follow(this.player);
+		this.game.camera.follow(this.player); 
 
 		gas = this.game.add.group();
 		gas.enableBody = true;
@@ -30,14 +30,14 @@ Aftermath.Game.prototype = {
 		goons.enableBody = true;
 
 
-		for (var i=0; i <= 20; i++) {
+		for (var i=0; i <= 100; i++) {
 			var gasBarrel = gas.create(this.game.world.randomX, this.game.world.randomY, 'gas');
 			var foodBarrel = food.create(this.game.world.randomX, this.game.world.randomY, 'food');
 			gasBarrel.body.collideWorldBounds = true;
 			foodBarrel.body.collideWorldBounds = true;
 		}
 
-	for (var i=0; i<=20; i++) {
+	for (var i=0; i<=35; i++) {
 		var enemyTruck = enemyTrucks.create(this.game.world.randomX, this.game.world.randomY, 'enemy');
 		/*enemyBase.body.immovable = true;*/
 			enemyTruck.body.collideWorldBounds = true;
@@ -61,16 +61,17 @@ Aftermath.Game.prototype = {
 },
 
 	update: function() {
+
 		this.player.body.angularVelocity = 0;
 
   if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
   	if (this.player.body.speed > 0) {
-  		this.player.body.angularVelocity = 130; 	
+  		this.player.body.angularVelocity = 180; 	
   	} 
 
   } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
   		if (this.player.body.speed > 0) {
-  			this.player.body.angularVelocity = -130;
+  			this.player.body.angularVelocity = -180;
 	  }
 
 	  }
@@ -78,13 +79,13 @@ Aftermath.Game.prototype = {
 	if (this.game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
 			if (currSpeed < 0) {
 				currSpeed += 20;
-			} else if (currSpeed >= 0 && currSpeed < 500) {
+			} else if (currSpeed >= 0 && currSpeed < 600) {
 				currSpeed += 25;
 			}
 			this.game.physics.arcade.velocityFromAngle(this.player.angle, currSpeed, this.player.body.velocity);
 		} else {
 				if ( currSpeed > 0) {
-					currSpeed -= 7;
+					currSpeed -= 6;
 				} else if (currSpeed < 0) {
 					currSpeed += 5;
 				}
