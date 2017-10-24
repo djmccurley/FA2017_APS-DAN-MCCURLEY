@@ -47,6 +47,9 @@ Aftermath.Game.prototype = {
 			for (j=1; j<=4; j++) {
 				var goon = goons.create(enemyTruck.x + this.game.rnd.integerInRange(-200, 200), enemyTruck.y + this.game.rnd.integerInRange(-200, 200), 'hitman');
 				goon.body.collideWorldBounds = true;
+				goon.body.drag.set(300);
+				enemyTruck.body.bounce.x=.8;
+				enemyTruck.body.bounce.y=.8;
 			}
 	}
 
@@ -66,12 +69,12 @@ Aftermath.Game.prototype = {
 
   if (this.game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
   	if (this.player.body.speed > 0) {
-  		this.player.body.angularVelocity = 180; 	
+  		this.player.body.angularVelocity = 140; 	
   	} 
 
   } else if (this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
   		if (this.player.body.speed > 0) {
-  			this.player.body.angularVelocity = -180;
+  			this.player.body.angularVelocity = -140;
 	  }
 
 	  }
@@ -124,6 +127,18 @@ Aftermath.Game.prototype = {
 
 	function hitEnemyTruck() {
 			currSpeed *= .05;
+	}
+
+	this.game.physics.arcade.collide(this.player, goons, hitGoons);
+
+	function hitGoons(player, goon) {
+			if (currSpeed >= 550) {
+				currSpeed *= .9;
+				goon.kill();
+			} else {
+
+			}
+			
 	}
 	}
 }
