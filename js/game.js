@@ -4,8 +4,8 @@ Aftermath.Game = function(){};
 
 Aftermath.Game.prototype = {
 	create: function() {
-		this.game.world.setBounds(0,0, 4000, 4000);
-		this.background = this.game.add.tileSprite(0, 0, 4000, 4000, 'sand');
+		this.game.world.setBounds(0,0, 12000, 12000);
+		this.background = this.game.add.tileSprite(0, 0, 12000, 12000, 'sand');
 
 		this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
 		this.player.anchor.setTo(0.5, 0.5);
