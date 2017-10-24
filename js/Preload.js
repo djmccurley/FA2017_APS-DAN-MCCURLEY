@@ -16,6 +16,7 @@ Aftermath.Preload.prototype = {
 		this.load.image('man', 'assets/man.png');
 		this.load.image('player', 'assets/player1.png');
 		this.load.image('sand', 'assets/sand.png');
+		this.load.image('bullet', 'assets/bullet.png');
 	},
 
 	create: function() {

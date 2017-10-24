@@ -4,8 +4,8 @@ Aftermath.Game = function(){};
 
 Aftermath.Game.prototype = {
 	create: function() {
-		this.game.world.setBounds(0,0, 24000, 24000);
-		this.background = this.game.add.tileSprite(0, 0, 24000, 24000, 'sand');
+		this.game.world.setBounds(0,0, 4000, 4000);
+		this.background = this.game.add.tileSprite(0, 0, 4000, 4000, 'sand');
 
 		this.player = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'player');
 		this.player.anchor.setTo(0.5, 0.5);
@@ -14,6 +14,17 @@ Aftermath.Game.prototype = {
 		this.player.body.collideWorldBounds = true;
 		this.player.body.drag.set(300);
 		this.game.camera.follow(this.player); 
+
+		bullets = this.game.add.group();
+		bullets.enableBody = true;
+		bullets.createMultiple(30, 'bullet');
+		bullets.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetBullet);
+		bullets.callAll('anchor.setTo', 'anchor', 0.2, 0.5);
+		bullets.callAll('scale.setTo', 'scale', .2);
+		bullets.setAll('checkWorldBounds', true);
+		function resetBullet(bullet) {
+			bullet.kill();
+		}
 
 		gas = this.game.add.group();
 		gas.enableBody = true;
@@ -107,6 +118,18 @@ Aftermath.Game.prototype = {
 				this.game.physics.arcade.velocityFromAngle(this.player.angle, currSpeed, this.player.body.velocity);
 			}
 
+	if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
+		fireBullet(this.player.x, this.player.y, this.player.angle, this.game);
+	}
+
+	function fireBullet(x, y, angle, game) {
+		var shot = bullets.getFirstExists(false);
+		if (shot) {
+			shot.reset(x, y);
+			game.physics.arcade.velocityFromAngle(angle, 1800, shot.body.velocity);
+		}
+	}
+
 	this.game.physics.arcade.overlap(this.player, gas, collectGas, null, this);
 
 	function	collectGas (player, gas) {
@@ -131,6 +154,9 @@ Aftermath.Game.prototype = {
 
 	this.game.physics.arcade.collide(this.player, goons, hitGoons);
 
+	this.game.physics.arcade.collide(bullets, goons, shootGoons);
+	this.game.physics.arcade.collide(bullets, enemyTrucks, shootTrucks);
+
 	function hitGoons(player, goon) {
 			if (currSpeed >= 550) {
 				currSpeed *= .9;
@@ -140,5 +166,20 @@ Aftermath.Game.prototype = {
 			}
 			
 	}
+
+	function shootGoons(bullet, goon) {
+			goon.kill();
+			bullet.kill();
+			
 	}
+
+	function shootTrucks(bullet, truck) {
+		bullet.kill();
+
+	}
+
+
+	} //update loop
+
+
 }
