@@ -67,6 +67,8 @@ Aftermath.Game.prototype = {
 			enemyTruck.body.drag.set(1000);
 			enemyTruck.body.bounce.x=.5;
 			enemyTruck.body.bounce.y=.5;
+			enemyTruck.anchor.setTo(0.5, 0.5);
+			enemyTruck.angle = this.game.rnd.integerInRange(0, 360);
 			for (j=1; j<=4; j++) {
 				var goon = goons.create(enemyTruck.x + this.game.rnd.integerInRange(-200, 200), enemyTruck.y + this.game.rnd.integerInRange(-200, 200), 'hitman');
 				goon.body.collideWorldBounds = true;
