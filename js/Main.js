@@ -9,6 +9,7 @@ var player;
 var enemyTrucks;
 var goons;
 var bullets;
+var playerWeapon;
 var currSpeed = 0;
 var gasCount = 0;
 var foodCount = 0;

@@ -15,7 +15,7 @@ Aftermath.Game.prototype = {
 		this.player.body.drag.set(300);
 		this.game.camera.follow(this.player); 
 
-		bullets = this.game.add.group();
+/*		bullets = this.game.add.group();
 		bullets.enableBody = true;
 		bullets.createMultiple(30, 'bullet');
 		bullets.callAll('events.onOutOfBounds.add', 'events.onOutOfBounds', resetBullet);
@@ -24,7 +24,19 @@ Aftermath.Game.prototype = {
 		bullets.setAll('checkWorldBounds', true);
 		function resetBullet(bullet) {
 			bullet.kill();
-		}
+		}*/
+
+		playerWeapon = this.game.add.weapon(30, 'bullet');
+		playerWeapon.bulletKillType = Phaser.Weapon.KILL_DISTANCE;
+		playerWeapon.bulletKillDistance = 2000;
+		playerWeapon.fireRate = 250;
+		playerWeapon.bulletSpeed = 1800;
+		playerWeapon.bullets.setAll('body.enable', true);
+		playerWeapon.trackSprite(this.player, 0, 0, true);
+		playerWeapon.bulletAngleOffset = this.player.angle;
+		
+
+
 
 		gas = this.game.add.group();
 		gas.enableBody = true;
@@ -118,17 +130,17 @@ Aftermath.Game.prototype = {
 				this.game.physics.arcade.velocityFromAngle(this.player.angle, currSpeed, this.player.body.velocity);
 			}
 
-	if (this.game.input.keyboard.justPressed(Phaser.Keyboard.SPACEBAR)) {
-		fireBullet(this.player.x, this.player.y, this.player.angle, this.game);
+	if (this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+		playerWeapon.fire();
 	}
 
-	function fireBullet(x, y, angle, game) {
+/*	function fireBullet(x, y, angle, game) {
 		var shot = bullets.getFirstExists(false);
 		if (shot) {
 			shot.reset(x, y);
 			game.physics.arcade.velocityFromAngle(angle, 1800, shot.body.velocity);
 		}
-	}
+	}*/
 
 	this.game.physics.arcade.overlap(this.player, gas, collectGas, null, this);
 
@@ -154,8 +166,8 @@ Aftermath.Game.prototype = {
 
 	this.game.physics.arcade.collide(this.player, goons, hitGoons);
 
-	this.game.physics.arcade.collide(bullets, goons, shootGoons);
-	this.game.physics.arcade.collide(bullets, enemyTrucks, shootTrucks);
+	this.game.physics.arcade.collide(playerWeapon.bullets, goons, shootGoons);
+	this.game.physics.arcade.collide(playerWeapon.bullets, enemyTrucks, shootTrucks);
 
 	function hitGoons(player, goon) {
 			if (currSpeed >= 550) {
